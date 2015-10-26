@@ -90,25 +90,25 @@ bool testMultiMapAPI(T testMap, bool& testPassedStatus){
     
     
     // Test count:
-    int num7 = testMap->count("hello");
-    int num8 = testMap->count("world");
-    int num9 = testMap->count("cat");
+    int num1 = testMap->count("hello");
+    int num2 = testMap->count("world");
+    int num3 = testMap->count("cat");
     
-    if(num7 == 2){
+    if(num1 == 2){
         cout << "count works" << endl;
     }
     else {
         testPassedStatus = false;
         cout << "count doesn't work" << endl;
     }
-    if(num8 == 1){
+    if(num2 == 1){
         cout << "count works" << endl;
     }
     else {
         testPassedStatus = false;
         cout << "count doesn't work" << endl;
     }
-    if(num9 == 1){
+    if(num3 == 1){
         cout << "count works" << endl;
     }
     else {
