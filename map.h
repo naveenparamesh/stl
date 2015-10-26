@@ -8,10 +8,10 @@ class MapArray{
     
     
     public:
-        void MapArray::set(string key, int value)
-        void MapArray::remove(string key)
-        int MapArray::get(string key)
-        int& MapArray::operator[](string key)
+        void MapArray::set(string key, int value);
+        void MapArray::remove(string key);
+        int MapArray::get(string key);
+        int& MapArray::operator[](string key);
 }:
 
 class MapList{
@@ -19,8 +19,8 @@ class MapList{
     
     
     public:
-        void MapList::set(string key, int value)
-        void MapList::remove(string key)
+        void MapList::set(string key, int value);
+        void MapList::remove(string key);
         int MapList::get(string key)
         int& MapList::operator[](string key)
     

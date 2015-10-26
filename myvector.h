@@ -11,7 +11,7 @@ class MyDynamicArray {
     MyDynamicArray(unsigned long long initial_size = 0);
     void push_back(T element);
     unsigned long long size();
-    T at(unsigned long long index);
+    T& at(unsigned long long index);
     void removeAt(unsigned long long index_of_key);
     void clear();
     T* getArray();
@@ -74,7 +74,7 @@ unsigned long long MyDynamicArray<T>::size(){
 }
 
 template<typename T>
-T MyDynamicArray<T>::at(unsigned long long index){
+T& MyDynamicArray<T>::at(unsigned long long index){
   return my_vector[index];
 }
 
@@ -91,6 +91,7 @@ T* MyDynamicArray<T>::getArray(){
 
 template<typename T>
 unsigned long long MyDynamicArray<T>::searchKeys(string key){
+    //cout << "size of array when searching for " << key << " is: " << size_of_array << endl;
     for(unsigned long long i = 0; i < size_of_array; i++){
         if(my_vector[i].key == key){
             return i;

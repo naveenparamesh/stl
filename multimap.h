@@ -25,18 +25,19 @@ class MultiMapArray{
             
             void setData(int value){
                 data.push_back(value);
-                 cout << "All of data so far is:" << endl;
-                for(int i = 0; i < data.size(); i++){
-                    cout << "data.at(" << i << "): " << data.at(i) << endl;
-                }
+                //  cout << "All of data so far is:" << endl;
+                // for(int i = 0; i < data.size(); i++){
+                //     cout << "data.at(" << i << "): " << data.at(i) << endl;
+                // }
             };
         
         }; // end of struct
 
-        MyDynamicArray<KeyAndValue> thePairs;
+        
         bool searchData(unsigned long long index_of_key, int value);
 
     public:
+    MyDynamicArray<KeyAndValue> thePairs;
         MultiMapArray(){};//constructor
         ~MultiMapArray(){ //destructor
             thePairs.clear();

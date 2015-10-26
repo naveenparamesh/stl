@@ -14,12 +14,13 @@ void MultiMapArray::set(string key, int value){
             unsigned long long index_of_key = thePairs.searchKeys(key);
             // if key is not in array add value and key
             if(index_of_key == -1){
-                //cout << "key was never found for " << key << " and " << value << endl;
-                thePairs.push_back(KeyAndValue(key, value));
+                KeyAndValue keyAndvalue(key, value);
+                thePairs.push_back(keyAndvalue);
             }
             //add the data value onto that key
             else{
                 thePairs.at(index_of_key).setData(value);
+                //thePairs.at(index_of_key).data.push_back(value);
             }
         }
 }
@@ -32,11 +33,6 @@ bool MultiMapArray::searchData(unsigned long long index_of_key, int value){
             return true;
         }
     }
-    // cout << "size of data is " << thePairs.at(index_of_key).data.size() << " for value " << value << endl;
-    // for(unsigned long long i = 0; i < thePairs.at(index_of_key).data.size(); i++){
-    //     cout << "At index " << i << ": " << thePairs.at(index_of_key).data.at(i) << endl;
-    // }
-    
     
     return false;
 }
@@ -44,15 +40,12 @@ bool MultiMapArray::searchData(unsigned long long index_of_key, int value){
 // searches for the given key value pair, returns true if found, false otherwise
 bool MultiMapArray::searchPairs(string key, int value){
     // call searchKeys(key) to get index of given key
-    long long index_of_key = thePairs.searchKeys(key);
-    //cout << "index returned for " << key << " is " << index_of_key << endl;
+    unsigned long long index_of_key = thePairs.searchKeys(key);
     if(index_of_key == -1){
         return false;
     }
     // key exists -> call searchData
     else{
-        //cout << "happened for " << key << " and " << value << endl;
-        //cout << " and returned " << searchData(index_of_key, value) << endl;
        return searchData(index_of_key, value);
     }
 }
@@ -92,7 +85,7 @@ int MultiMapArray::getNumElements(){
 }
 
 
-//    BEGINING OF LINKEDLISTIMPLEMENTATION
+//    BEGINING OF LINKEDLIST IMPLEMENTATION
 
 
 
@@ -202,6 +195,9 @@ int* MultiMapList::getAll(string key){
         }
         
 }
+
+
+//    BEGINING OF HASHMAP IMPLEMENTATION
 
 
 
