@@ -25,12 +25,7 @@ class MultiMapArray{
             
             void setData(int value){
                 data.push_back(value);
-                //  cout << "All of data so far is:" << endl;
-                // for(int i = 0; i < data.size(); i++){
-                //     cout << "data.at(" << i << "): " << data.at(i) << endl;
-                // }
             };
-        
         }; // end of struct
 
         
@@ -67,6 +62,9 @@ class MultiMapList{
             
             // default constructor
             KeyAndValue(){}; 
+            ~KeyAndValue(){
+                
+            }; 
             
             void set(string inKey, int inValue){
                 key = inKey;
@@ -74,7 +72,7 @@ class MultiMapList{
             };
             
             void setData(int value){
-                data.Append(value);
+                data.Append(&value);
             };
         
         }; // end of struct
@@ -84,7 +82,7 @@ class MultiMapList{
     public:
         MultiMapList(){};//constructor
         ~MultiMapList(){ //destructor
-            
+            //thePairs.clearList();
             cout << "deleting MultiMap..." << endl;
         };
         bool searchPairs(string key, int value);
@@ -114,7 +112,7 @@ class MultiMapHash{
                 };
                 
                 void setData(int value){
-                    data.Append(value);
+                    data.Append(&value);
                 };
             
             }; // end of struct
@@ -123,7 +121,7 @@ class MultiMapHash{
     public:
         MultiMapHash(){};//constructor
         ~MultiMapHash(){ //destructor
-            
+            //map.~HashMap<KeyAndValue>();
             cout << "deleting MultiMap..." << endl;
         };
         bool searchPairs(string key, int value);

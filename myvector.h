@@ -16,6 +16,7 @@ class MyDynamicArray {
     void clear();
     T* getArray();
     unsigned long long searchKeys(string key);
+    unsigned long long searchKey(string key);
 
   private:
     T* my_vector;
@@ -28,12 +29,16 @@ MyDynamicArray<T>::MyDynamicArray(unsigned long long initial_size){
   size_of_array = initial_size;
 }
 
+// in the future we should change this function to increase the size of the 
+// array less frequently because in its current state, this function copies
+// n elements every time its called. 
 template<typename T>
 void MyDynamicArray<T>::push_back(T element){
   T* temp = new T[size_of_array + 1];
   for(int i = 0; i < size_of_array; i++){
     temp[i] = my_vector[i];
   }
+  
   size_of_array += 1;
   delete[] my_vector;
   my_vector = temp;
@@ -94,6 +99,17 @@ unsigned long long MyDynamicArray<T>::searchKeys(string key){
     //cout << "size of array when searching for " << key << " is: " << size_of_array << endl;
     for(unsigned long long i = 0; i < size_of_array; i++){
         if(my_vector[i].key == key){
+            return i;
+        }
+    }
+    return -1;
+}
+
+template<typename T>
+unsigned long long MyDynamicArray<T>::searchKey(string key){
+    //cout << "size of array when searching for " << key << " is: " << size_of_array << endl;
+    for(unsigned long long i = 0; i < size_of_array; i++){
+        if(my_vector[i] == key){
             return i;
         }
     }

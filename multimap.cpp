@@ -93,18 +93,19 @@ int MultiMapArray::getNumElements(){
 // adds given key and given value to Map
 void MultiMapList::set(string key, int value){
     //KeyAndValue keyValue(key, value);
-    
+    KeyAndValue* keyAndValue = new KeyAndValue(key, value);
      if(!searchPairs(key, value)){//if that key value pair doesn't already exist
-            Node<KeyAndValue>* keyNode = thePairs.searchStructs(KeyAndValue(key, value));
+            
+            Node<KeyAndValue>* keyNode = thePairs.searchStructs(keyAndValue);
             // if key is not in array add value and key
             if(keyNode == 0){
                 // KeyAndValue keyAndvalue(key, value);
-                 thePairs.Append(KeyAndValue(key, value));
+                 thePairs.Append(keyAndValue);
             }
             //add an extra data value onto that key
             else{
                 //thePairs.at(index_of_key).setData(value);
-                keyNode->data.data.Append(value);
+                keyNode->data.data.Append(&value);
             }
         }
 }
@@ -112,8 +113,8 @@ void MultiMapList::set(string key, int value){
 
 // searches for the given key value pair, returns true if found, false otherwise
 bool MultiMapList::searchPairs(string key, int value){
-    KeyAndValue keyValue(key, value);
-    Node<KeyAndValue>* keyNode = thePairs.searchStructs(KeyAndValue(key, value));
+    KeyAndValue* keyAndValue = new KeyAndValue(key, value);
+    Node<KeyAndValue>* keyNode = thePairs.searchStructs(keyAndValue);
     if(keyNode == 0){// meaning the if that key wasn't in the list
         return false;
     }
@@ -134,13 +135,13 @@ bool MultiMapList::searchPairs(string key, int value){
 
 // removes all values mapped w/ key
 void MultiMapList::removeAll(string key){
-    KeyAndValue keyValue(key, 0);
-    thePairs.DeleteNodeStructs(keyValue);
+    KeyAndValue* keyAndValue = new KeyAndValue(key, 0);
+    thePairs.DeleteNodeStructs(keyAndValue);
 }
 
 // find number of elements contained under given key
 int  MultiMapList::count(string key){
-    KeyAndValue keyValue(key, 0);
+    KeyAndValue* keyValue = new KeyAndValue(key, 0);
     Node<KeyAndValue>* keyNode = thePairs.searchStructs(keyValue);
     if(keyNode == 0){
         return 0;
@@ -154,8 +155,8 @@ int  MultiMapList::count(string key){
 
 // returns all data mapped under given key
 int* MultiMapList::getAll(string key){
-    KeyAndValue keyValue(key, 0);
-    Node<KeyAndValue>* keyNode = thePairs.searchStructs(keyValue);
+    KeyAndValue* keyAndValue = new KeyAndValue(key, 0);
+    Node<KeyAndValue>* keyNode = thePairs.searchStructs(keyAndValue);
     if(keyNode == 0){//if that key isn't even in the map
         return 0;
     }
@@ -164,7 +165,7 @@ int* MultiMapList::getAll(string key){
     
         // consider base-case -> key not in List
         if(keyNode == 0){
-            return temp_array.getArray(); // (int*)(temp_array.getArray());
+            return temp_array.getArray(); // (int*)(temp_array.getArray());s
         }
         // lets walk thru LL and add data of each node into temp_array each step
         else{
@@ -174,24 +175,6 @@ int* MultiMapList::getAll(string key){
                 currentNode = currentNode->nextNode;
             }
             return temp_array.getArray();
-            // while(true){
-            //     Node<int>* currentNode = keyNode->data.data.getHeadNode();//get head node from data linkedlist
-            //     if(keyNode->data.data.countNodes() == 1){//if there is just one value
-            //         temp_array.push_back(currentNode->data);
-            //         return temp_array.getArray();
-            //     }
-            //     // if(currentNode->previousNode == 0 && currentNode->nextNode == 0){
-            //     //     temp_array.push_back(keyNode.data.data);
-            //     //       break;
-            //     // }
-            //     if(currentNode->nextNode != 0){
-            //         temp_array.push_back(currentNode->data);
-            //     }
-            //     else{
-            //         return temp_array.getArray();
-            //     }
-            //     currentNode = currentNode->nextNode;
-            // }
         }
         
 }
@@ -204,20 +187,19 @@ int* MultiMapList::getAll(string key){
 // adds given key and given value to Map
 void MultiMapHash::set(string key, int value){
     unsigned int bucket = map.myhash(&key.at(0), key.length(), 1000);
-    KeyAndValue keyValue(key, value);
+    KeyAndValue* keyValue = new KeyAndValue(key, value);
     
      if(!searchPairs(key, value)){//if that key value pair doesn't already exist
             Node<KeyAndValue>* keyNode = map.getTable()[bucket].searchStructs(keyValue);
             // if key is not in array add value and key
             if(keyNode == 0){
-                KeyAndValue keyAndvalue(key, value);
-                 map.getTable()[bucket].Append(keyAndvalue);
+                 map.getTable()[bucket].Append(keyValue);
             }
             //add an extra data value onto that key
             else{
                 //thePairs.at(index_of_key).setData(value);
                 Node<KeyAndValue>* keyNode =  map.getTable()[bucket].searchStructs(keyValue);
-                keyNode->data.data.Append(value);
+                keyNode->data.data.Append(&value);
             }
         }
 }
@@ -225,7 +207,7 @@ void MultiMapHash::set(string key, int value){
 // searches for the given key value pair, returns true if found, false otherwise
 bool MultiMapHash::searchPairs(string key, int value){
     unsigned int bucket = map.myhash(&key.at(0), key.length(), 1000);
-    KeyAndValue keyValue(key, value);
+    KeyAndValue* keyValue = new KeyAndValue(key, value);
     Node<KeyAndValue>* keyNode =  map.getTable()[bucket].searchStructs(keyValue);
     if(keyNode == 0){// meaning the if that key wasn't in the list
         return false;
@@ -245,7 +227,7 @@ bool MultiMapHash::searchPairs(string key, int value){
 // removes all values mapped w/ key
 void MultiMapHash::removeAll(string key){
     unsigned int bucket = map.myhash(&key.at(0), key.length(), 1000);
-    KeyAndValue keyValue(key, 0);
+    KeyAndValue* keyValue = new KeyAndValue(key, 0);
     map.getTable()[bucket].DeleteNodeStructs(keyValue);
     
 }
@@ -254,7 +236,7 @@ void MultiMapHash::removeAll(string key){
 int  MultiMapHash::count(string key){
 
     unsigned int bucket = map.myhash(&key.at(0), key.length(), 1000);
-    KeyAndValue keyValue(key, 0);
+    KeyAndValue* keyValue = new KeyAndValue(key, 0);
     Node<KeyAndValue>*  keyNode =  map.getTable()[bucket].searchStructs(keyValue);
     if(keyNode == 0){
         return 0;
@@ -268,7 +250,7 @@ int  MultiMapHash::count(string key){
 // returns all data mapped under given key
 int* MultiMapHash::getAll(string key){
     unsigned int bucket = map.myhash(&key.at(0), key.length(), 1000);
-    KeyAndValue keyValue(key, 0);
+    KeyAndValue* keyValue = new KeyAndValue(key, 0);
     Node<KeyAndValue>* keyNode = map.getTable()[bucket].searchStructs(keyValue);
     int size = keyNode->data.data.countNodes();
     MyDynamicArray<int> temp_array;
@@ -285,24 +267,6 @@ int* MultiMapHash::getAll(string key){
                 currentNode = currentNode->nextNode;
             }
             return temp_array.getArray();
-            // while(true){
-            //     Node<int>* currentNode = keyNode->data.data.getHeadNode();//get head node from data linkedlist
-            //     if(keyNode->data.data.countNodes() == 1){//if there is just one value
-            //         temp_array.push_back(currentNode->data);
-            //         return temp_array.getArray();
-            //     }
-            //     // if(currentNode->previousNode == 0 && currentNode->nextNode == 0){
-            //     //     temp_array.push_back(keyNode.data.data);
-            //     //       break;
-            //     // }
-            //     if(currentNode->nextNode != 0){
-            //         temp_array.push_back(currentNode->data);
-            //     }
-            //     else{
-            //         break;
-            //     }
-            //     currentNode = currentNode->nextNode;
-            // }
         }
         return temp_array.getArray();
     

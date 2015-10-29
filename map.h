@@ -1,40 +1,124 @@
-#include <iostream>
 #include <string>
+#include <cstdlib>
+#include <iostream>
+#include "myvector.h"
+#include "linkedlist.h"
+#include "hashmap.h"
 
 using namespace std;
 
 class MapArray{
     private:
+        struct KeyAndValue{
+            string key;
+            int data; // allows mult vals under same key in array
+            KeyAndValue(string inKey, int inValue){
+                set(inKey, inValue);
+            };
+            
+            // default constructor
+            KeyAndValue(){}; 
+            
+            void set(string inKey, int inValue){
+                key = inKey;
+                setData(inValue);
+            };
+            
+            void setData(int value){
+                data = value;
+            };
+        
+        }; // end of struct
+        
+        MyDynamicArray<KeyAndValue> thePairs;
     
     
     public:
-        void MapArray::set(string key, int value);
-        void MapArray::remove(string key);
-        int MapArray::get(string key);
-        int& MapArray::operator[](string key);
-}:
+         MapArray(){};//constructor
+        ~MapArray(){ //destructor
+              thePairs.clear();
+              cout << "deleting Map..." << endl;
+          };
+        void set(string key, int value);
+        void remove(string key);
+        int get(string key);
+        int& operator[](string key);
+        bool searchPairs(string key, int value);
+};
 
 class MapList{
     private:
-    
+        struct KeyAndValue{
+            string key;
+            int data; // allows mult vals under same key in array
+            KeyAndValue(string inKey, int inValue){
+                set(inKey, inValue);
+            };
+            
+            // default constructor
+            KeyAndValue(){}; 
+            
+            void set(string inKey, int inValue){
+                key = inKey;
+                setData(inValue);
+            };
+            
+            void setData(int value){
+                data = value;
+            };
+        
+        }; // end of struct
+        LinkedListClass<KeyAndValue> thePairs;
     
     public:
-        void MapList::set(string key, int value);
-        void MapList::remove(string key);
-        int MapList::get(string key)
-        int& MapList::operator[](string key)
+        MapList(){};//constructor
+        ~MapList(){ //destructor
+            
+            cout << "deleting Map..." << endl;
+        };
+        void set(string key, int value);
+        void remove(string key);
+        int get(string key);
+        int& operator[](string key);
+        bool searchPairs(string key, int value);
     
-}:
+};
 
 class MapHash{
     private:
+        struct KeyAndValue{
+            string key;
+            int data; // allows mult vals under same key in array
+            KeyAndValue(string inKey, int inValue){
+                set(inKey, inValue);
+            };
+            
+            // default constructor
+            KeyAndValue(){}; 
+            
+            void set(string inKey, int inValue){
+                key = inKey;
+                setData(inValue);
+            };
+            
+            void setData(int value){
+                data = value;
+            };
+        
+        }; // end of struct
+        
+        HashMap<KeyAndValue> map;
     
     
     public:
-        void MapHash::set(string key, int value)
-        void MapHash::remove(string key)
-        int MapHash::get(string key)
-        int& MapHash::operator[](string key)
-    
-    
-}:
+        MapHash(){};//constructor
+        ~MapHash(){ //destructor
+            
+            cout << "deleting Map..." << endl;
+        };
+        void set(string key, int value);
+        void remove(string key);
+        int get(string key);
+        int& operator[](string key);
+        bool searchPairs(string key, int value);
+};

@@ -9,15 +9,24 @@ struct Node{
     Node* nextNode;
     Node* previousNode;
     DataType data;
-    Node(DataType inputData);
+    Node(DataType* inputData);
+    //~Node();
 };
 
 template <typename DataType>
-Node<DataType>::Node(DataType inputData){
-    data = inputData;
+Node<DataType>::Node(DataType* inputData){
+    data = *inputData;
     nextNode = 0;
     previousNode = 0;
 }
+
+//template <typename DataType>
+// Node<DataType>::~Node(){
+    
+// //   if(nextNode != 0){
+// //       delete this;
+// //   }
+// }
 
 template <typename DataType>
 class LinkedListClass{
@@ -32,24 +41,27 @@ class LinkedListClass{
         tail = 0;
     }
     ~LinkedListClass(){
+        // if(head != 0){
+        //     delete head;
+        // }
         clearList();
     }
     
-    void Prepend(DataType inputData){
-        Node<DataType>* newNode = new Node<DataType>(inputData);
-        if(head == 0){
-            head = newNode;
-            tail = newNode;
-        }
-        else {
-            Node<DataType>* tempNode = head;
-            newNode->nextNode = head;
-            head = newNode;
-            tempNode->previousNode = head;
-        }
-    }
+    // void Prepend(DataType inputData){
+    //     Node<DataType>* newNode = new Node<DataType>(inputData);
+    //     if(head == 0){
+    //         head = newNode;
+    //         tail = newNode;
+    //     }
+    //     else {
+    //         Node<DataType>* tempNode = head;
+    //         newNode->nextNode = head;
+    //         head = newNode;
+    //         tempNode->previousNode = head;
+    //     }
+    // }
     
-    void Append(DataType inputData){
+    void Append(DataType* inputData){
         Node<DataType>* newNode = new Node<DataType>(inputData);
         if(tail == 0){
             head = newNode;
@@ -64,28 +76,29 @@ class LinkedListClass{
         
     }
     
-    void DeleteNodeStructs(DataType inputData){
+    void DeleteNodeStructs(DataType* inputData){
         Node<DataType>* currentNode = head;
         while(true){
             if(currentNode == 0){//if there are no nodes at all nothing to delete so just break;
                 break;
             }
-            if(currentNode->data.key == inputData.key){// this is the node you want to delete
+            if(currentNode->data.key == inputData->key){// this is the node you want to delete
                 if(currentNode->previousNode == 0 && currentNode->nextNode == 0){
                     delete currentNode;
                     head = 0;
                     tail = 0;
                 }
-                else if(currentNode->previousNode == 0){//meaing ur deleteing the head
+                else if(currentNode->previousNode == 0){//meaning ur deleteing the head
                     currentNode->nextNode->previousNode = 0;
                     head = currentNode->nextNode;
                     delete currentNode;
                     
                 }
-                else if(currentNode->nextNode == 0){//meaing ur deleteing the head
+                else if(currentNode->nextNode == 0){//meaning ur deleteing the head
                     currentNode->previousNode->nextNode = 0;
                     tail = currentNode->previousNode;
                     delete currentNode;
+
                 }
                 else {
                     currentNode->previousNode->nextNode = currentNode->nextNode;
@@ -108,7 +121,8 @@ class LinkedListClass{
             if(currentNode == 0){//if there are no nodes at all nothing to delete so just break;
                 break;
             }
-            if(currentNode->data == inputData){// this is the node you want to delete
+            if(currentNode->data == inputData){// this is the node you want to 
+                //meaning that this is the only node in the list
                 if(currentNode->previousNode == 0 && currentNode->nextNode == 0){
                     delete currentNode;
                     head = 0;
@@ -116,10 +130,12 @@ class LinkedListClass{
                 }
                 else if(currentNode->previousNode == 0){//meaing ur deleteing the head
                     currentNode->nextNode->previousNode = 0;
+                    head = currentNode->nextNode;
                     delete currentNode;
                 }
                 else if(currentNode->nextNode == 0){//meaning ur deleting the tail
                     currentNode->previousNode->nextNode = 0;
+                    tail = currentNode->previousNode;
                     delete currentNode;
                 }
                 else {
@@ -137,13 +153,13 @@ class LinkedListClass{
         }
     }
     
-    Node<DataType>* searchStructs(DataType inputData){ 
+    Node<DataType>* searchStructs(DataType* inputData){ 
         Node<DataType>* currentNode = head;
         while(true){
             if(currentNode == 0){//no nodes in the list
                 return 0;
             }
-            if(currentNode->data.key == inputData.key){//found the node, return true
+            if(currentNode->data.key == inputData->key){//found the node, return true
                 return currentNode;
             }
              else if(currentNode == tail){
@@ -173,19 +189,35 @@ class LinkedListClass{
     }
     
     void clearList(){
-        Node<DataType>* currentNode = head;
+        // Node<DataType>* currentNode = head;
+        // while(true){
+        //     if(currentNode == 0){//no nodes in the list, thus nothing to delete
+        //          return;
+        //     }
+
+        //     Node<DataType>* tempNode = currentNode;
+        //     currentNode = currentNode->nextNode;
+            
+        //     if (currentNode != 0){
+        //         cout << "happening" << endl;
+        //         delete tempNode; // gets rid of that node
+        //     }
+        //     else {
+        //         delete currentNode; // gets rid of head
+        //         return;
+        //     }
+        // }
+         Node<DataType>* currentNode = head;
         while(true){
             if(currentNode == 0){//no nodes in the list, thus nothing to delete
-                 break;
+                 
+                 return;
             }
             Node<DataType>* tempNode = currentNode;
             currentNode = currentNode->nextNode;
-            if (currentNode != 0){
-                delete tempNode; // gets rid of that node
-            }
-             //delete tempNode; // gets rid of that node
-            
+            delete tempNode; // gets rid of that node
         }
+       
     }
     
     int countNodes(){

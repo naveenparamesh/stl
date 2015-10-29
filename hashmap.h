@@ -8,14 +8,13 @@
 using namespace std;
 
 
-
-
 template<typename T>
 class HashMap{
     private:
         int size_of_table;
         LinkedListClass<T>* table;
     public:
+        bool empty;
         HashMap(){
             size_of_table = 1000;
             table = new LinkedListClass<T>[size_of_table];
@@ -25,7 +24,7 @@ class HashMap{
             }
         };
         ~HashMap(){
-            delete[] table;//goes through each index and deletes it, thus calls the linked list class destructor
+            clearHashMap();//goes through each index and deletes it, thus calls the linked list class destructor
         };
         
         unsigned int FNV1a(const void *bytes, int len){
@@ -65,11 +64,10 @@ class HashMap{
             return table;
         }
         
-        
-        
-        
-        
-        
+        void clearHashMap(){
+            delete[] table;
+        }
+
 
 };
 

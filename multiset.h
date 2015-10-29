@@ -1,18 +1,46 @@
-#include <iostream>
 #include <string>
+#include <cstdlib>
+#include <iostream>
+#include "myvector.h"
+#include "linkedlist.h"
+#include "hashmap.h"
 
 using namespace std;
 
 class MultiSetArray{
     private:
+        struct AKey{
+            string key;
+            unsigned long long numOccurrences; // allows mult vals under same key in array
+            AKey(string inKey): numOccurrences(0){
+                setAndIncrement(inKey);
+            };
+            
+            // default constructor
+            AKey(){}; 
+            
+            void setAndIncrement(string inKey){
+                key = inKey;
+                numOccurrences += 1;
+            };
+            void decrement(){
+                numOccurrences -= 1;
+            }
+        };//end of struct
+        MyDynamicArray<AKey> theKeys;
     
     public:
-        void MultiSetArray::insert(string key);
-        bool MultiSetArray::is_in(string key);
-        unsigned long MultiSetArray::count(string key);
-        void MultiSetArray::removeOne(string key);
-        void MultiSetArray::removeAll(string key);
-        bool MultiSetArray::is_empty();
+        MultiSetArray(){};//constructor
+        ~MultiSetArray(){ //destructor
+              theKeys.clear();
+              cout << "deleting MultiSet..." << endl;
+          };
+        void insert(string key);
+        bool is_in(string key);
+        unsigned long count(string key);
+        void removeOne(string key);
+        void removeAll(string key);
+        bool is_empty();  
 };
 
 
@@ -20,14 +48,37 @@ class MultiSetArray{
 
 class MultiSetList{
     private:
+     struct AKey{
+            string key;
+            unsigned long long numOccurrences; // allows mult vals under same key in array
+            AKey(string inKey): numOccurrences(0){
+                setAndIncrement(inKey);
+            };
+            
+            // default constructor
+            AKey(){}; 
+            
+            void setAndIncrement(string inKey){
+                key = inKey;
+                numOccurrences += 1;
+            };
+            void decrement(){
+                numOccurrences -= 1;
+            }
+        };//end of struct
+        LinkedListClass<AKey> theKeys;
     
     public:
-        void MultiSetList::insert(string key);
-        bool MultiSetList::is_in(string key);
-        unsigned long MultiSetList::count(string key);
-        void MultiSetList::removeOne(string key);
-        void MultiSetList::removeAll(string key);
-        bool MultiSetList::is_empty();
+        MultiSetList(){};//constructor
+        ~MultiSetList(){ //destructor
+              cout << "deleting MultiSet..." << endl;
+          };
+        void insert(string key);
+        bool is_in(string key);
+        unsigned long count(string key);
+        void removeOne(string key);
+        void removeAll(string key);
+        bool is_empty();
 };
 
 
@@ -35,12 +86,36 @@ class MultiSetList{
 
 class MultiSetHash{
     private:
+      struct AKey{
+            string key;
+            unsigned long long numOccurrences; // allows mult vals under same key in array
+            AKey(string inKey): numOccurrences(0){
+                setAndIncrement(inKey);
+            };
+            
+            // default constructor
+            AKey(){}; 
+            
+            void setAndIncrement(string inKey){
+                key = inKey;
+                numOccurrences += 1;
+            };
+            void decrement(){
+                numOccurrences -= 1;
+            }
+        };//end of struct
+        
     
     public:
-        void MultiSetHash::insert(string key);
-        bool MultiSetHash::is_in(string key);
-        unsigned long MultiSetHash::count(string key);
-        void MultiSetHash::removeOne(string key);
-        void MultiSetHash::removeAll(string key);
-        bool MultiSetHash::is_empty();
+    HashMap<AKey> map;
+        MultiSetHash(){};//constructor
+        ~MultiSetHash(){ //destructor
+              cout << "deleting MultiSet..." << endl;
+          };
+        void insert(string key);
+        bool is_in(string key);
+        unsigned long count(string key);
+        void removeOne(string key);
+        void removeAll(string key);
+        bool is_empty();
 };
