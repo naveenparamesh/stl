@@ -44,8 +44,8 @@ class SetList{
         bool is_in(string key);
         void remove(string key);
         bool is_empty();
-        // LinkedListClass<string> union(HashMap<string>* list);
-        // LinkedListClass<string> intersection(HashMap<string>* list);
+        SetList Union(SetList* set2);
+        SetList Intersection(SetList* set2);
 
 
 };
@@ -62,8 +62,8 @@ class SetHash{
         bool is_in(string key);
         void remove(string key);
         bool is_empty();
-        // HashMap<string> union(HashMap<string>* map);
-        // HashMap<string> intersection(HashMap<string>* map);
-
+        SetHash Union(SetHash* set2);
+        SetHash Intersection(SetHash* set2);
+    
 
 };

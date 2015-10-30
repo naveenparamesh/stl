@@ -7,6 +7,9 @@
 
 using namespace std;
 
+//---------------------------------MultiMapArray---------------------------------
+
+
 // adds given key and given value to Map
 void MultiMapArray::set(string key, int value){
         // search if KeyValuePair is already in array
@@ -85,7 +88,7 @@ int MultiMapArray::getNumElements(){
 }
 
 
-//    BEGINING OF LINKEDLIST IMPLEMENTATION
+//---------------------------------MultiMapList---------------------------------
 
 
 

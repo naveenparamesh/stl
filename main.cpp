@@ -5,13 +5,24 @@
 #include <string>
 #include "multiset.h"
 #include "set.h"
+#include <time.h>
 
 using namespace std;
 
 //---------------------------------MultiMapAPI----------------------------------
 
+double getFinalTime(clock_t start){
+    double result = (clock() - start) / (double)(CLOCKS_PER_SEC / 1000);
+    return result;
+}
+
 template <typename T>
 void testMultiMapAPI(T testMap, bool& testPassedStatus){
+    
+    // start a timer...
+    clock_t start1 = clock();
+
+    
     testMap->set("hello", 54);
     testMap->set("world", 3);
     testMap->set("hello", 24);
@@ -152,12 +163,23 @@ void testMultiMapAPI(T testMap, bool& testPassedStatus){
             cout << "It didn't work!" << endl;
         }
     }
+    
+    
+    
+    // call getFinalTime and print time
+    double finalTime = getFinalTime(start1);
+    cout << "Time since start: " << finalTime << " ms"  << endl;
+    
+    
 }
 
 //---------------------------------MapAPI---------------------------------------
 
 template <typename T>
 void testMapAPI(T& testMap, bool& testPassedStatus){
+    
+    clock_t start2 = clock();
+    
     testMap.set("hello", 54);
     testMap.set("world", 3);
     testMap.set("hello", 24);
@@ -288,12 +310,19 @@ void testMapAPI(T& testMap, bool& testPassedStatus){
     
     testMap["world"] = 22;
     cout<< testMap["world"] << endl;
+    
+    double finalTime2 = getFinalTime(start2);
+    cout << "Time since start: " << finalTime2 << " ms" << endl;
 }
 
 //---------------------------------MultiSetAPI----------------------------------
 
 template <typename T>
 void testMultiSetAPI(T testSet, bool& testPassedStatus){
+    
+   
+    clock_t start3 = clock();
+
     //testing both insert and count
     testSet->insert("hello");
     testSet->insert("world");
@@ -388,12 +417,20 @@ void testMultiSetAPI(T testSet, bool& testPassedStatus){
         testPassedStatus = false;
         cout << "it didn't work" << endl;
     }
+    
+    //cout << "Time: " << (clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << endl;
+    double finalTime1 = getFinalTime(start3);
+    cout << "Time since start: " << finalTime1 << " ms" << endl;
 }
 
 //---------------------------------SetAPI---------------------------------------
 
 template <typename T>
 void testSetAPI(T testSet, bool& testPassedStatus){
+    
+    clock_t start4 = clock();
+
+    
     // Test insert and is_in(string key):
     testSet->insert("hello");
     testSet->insert("world");
@@ -440,8 +477,16 @@ void testSetAPI(T testSet, bool& testPassedStatus){
         testPassedStatus = false;
         cout << "it didn't work" << endl;
     }
+    double finalTime4 = getFinalTime(start4);
+    cout << "Time since start: " << finalTime4 << " ms" << endl;
+    
+}
 
- //<ADD THE TEST FOR IS_IN>
+
+
+template <typename T>
+void testExtraCredit(T testSet, bool& testPassedStatus){
+   
     
 }
 
@@ -449,9 +494,11 @@ void testSetAPI(T testSet, bool& testPassedStatus){
 
 
 
-int main(){
-    
 
+
+int main(){
+
+    
     bool AllTestsPassed = true;
     MultiMapArray* testMap1 = new MultiMapArray();
     MultiMapList* testMap2 = new MultiMapList();
@@ -465,6 +512,9 @@ int main(){
      SetArray*  testSet4 = new SetArray();
      SetList*  testSet5 = new SetList();
     SetHash*  testSet6 = new SetHash();
+     SetArray testSet7;
+     SetList testSet8;
+    
     
     testMultiMapAPI<MultiMapArray*>(testMap1, AllTestsPassed);
     delete testMap1;
@@ -501,6 +551,60 @@ int main(){
     testSetAPI<SetHash*>(testSet6, AllTestsPassed);
     delete testSet6;
     
+    // testExtraCredit<SetArray>(testSet7, AllTestsPassed);
+    // testSet7.insert("hello");
+    // testSet7.insert("world");
+    // testSet7.insert("cat");
+    // SetArray* testSet = new SetArray();
+    // testSet->insert("apple");
+    
+    // SetArray unionSet = testSet7.Union(testSet);
+    // if(!unionSet.is_in("hello")){
+    //     AllTestsPassed = false;
+    //     cout << "it didn't work" << endl;
+    // }
+    //  if(!unionSet.is_in("world")){
+    //     AllTestsPassed = false;
+    //     cout << "it didn't work" << endl;
+    // }
+    //  if(!unionSet.is_in("cat")){
+    //     AllTestsPassed = false;
+    //     cout << "it didn't work" << endl;
+    // }
+    //  if(!unionSet.is_in("apple")){
+    //     AllTestsPassed = false;
+    //     cout << "it didn't work" << endl;
+    // }
+    
+    
+    
+    
+    // testSet8.insert("hello");
+    // testSet8.insert("world");
+    // testSet8.insert("cat");
+    // SetList* testSetList = new SetList();
+    // testSetList->insert("apple");
+    
+    // SetList unionSet2 = testSet8.Union(testSetList);
+    // if(!unionSet2.is_in("hello")){
+    //     AllTestsPassed = false;
+    //     cout << "it didn't work" << endl;
+    // }
+    //  if(!unionSet2.is_in("world")){
+    //     AllTestsPassed = false;
+    //     cout << "it didn't work" << endl;
+    // }
+    //  if(!unionSet2.is_in("cat")){
+    //     AllTestsPassed = false;
+    //     cout << "it didn't work" << endl;
+    // }
+    //  if(!unionSet2.is_in("apple")){
+    //     AllTestsPassed = false;
+    //     cout << "it didn't work" << endl;
+    // }
+    
+    
+    
     
     if(AllTestsPassed){
       cout << "ALL TESTS PASSED!" << endl; 
@@ -508,5 +612,6 @@ int main(){
     else {
         cout << "NOT ALL TESTS PASSED!" << endl; 
     }
+    
     return 0;
 }

@@ -2,9 +2,6 @@
 
 using namespace std;
 
-// Write a Set Set::Union(Set other_set) function
-// and a Set Set::Intersection(Set other_set) function.
-
 // --------------------------------SetArray-------------------------------------
 
 // pushes given key into array
@@ -60,9 +57,8 @@ SetArray SetArray::Union(SetArray* set2){
     // checks to see if the elements in set2 are in setUnion. If an element
     // of set2 is not in setUnion, then add that element to setUnion
     for(int i = 0; i < set2->theKeys.size(); i++) {
-        if (setUnion->is_in(set2->theKeys.at(i))) continue;
-        else {
-            setUnion->theKeys.push_back(set2->theKeys.at(i));
+        if (!(setUnion->is_in(set2->theKeys.at(i)))) {
+             setUnion->theKeys.push_back(set2->theKeys.at(i));
         }
     }
     return *setUnion;
@@ -71,21 +67,48 @@ SetArray SetArray::Union(SetArray* set2){
 SetArray SetArray::Intersection(SetArray* set2){
     SetArray* setIntersect = new SetArray();
     
+    // for(int i = 0; i < theKeys.size(); i++) {
+    //         setIntersect->theKeys.push_back(theKeys.at(i));
+    //     }
+        
+    // for(int i = 0; i < set2->theKeys.size(); i++) {
+    //         setIntersect->theKeys.push_back(set2->theKeys.at(i));
+    // }
+    
     // checks which set is greater, so you the for loop runs as long
     // as the longer set
-    if(theKeys.size() > set2->theKeys.size()) {
-        for(int i = 0; i < theKeys.size(); i++) {
-            if (set2->is_in(theKeys.at(i))) { //if both sets have same element
-                setIntersect->theKeys.push_back(theKeys.at(i));
+     if(theKeys.size() > set2->theKeys.size()) {
+        for(int i = 0; i < set2->theKeys.size(); i++) {
+            for(int j = 0; j < theKeys.size(); j++){
+                if (theKeys.at(j) == set2->theKeys.at(i)) { //if both sets have same element
+                        setIntersect->theKeys.push_back(theKeys.at(j));
+                    }
             }
+            
         }
     } else { // if set2 is larger
-        for(int i = 0; i < set2->theKeys.size(); i++) {
-            if (is_in(set2->theKeys.at(i))) {
-                setIntersect->theKeys.push_back(set2->theKeys.at(i));
+        for(int i = 0; i < theKeys.size(); i++) {
+            for(int j = 0; j < set2->theKeys.size(); j++){
+                if (set2->theKeys.at(j) == theKeys.at(i)) { //if both sets have same element
+                        setIntersect->theKeys.push_back(theKeys.at(i));
+                    }
             }
         }
     }
+   
+    // if(theKeys.size() > set2->theKeys.size()) {
+    //     for(int i = 0; i < theKeys.size(); i++) {
+    //         if (set2->is_in(theKeys.at(i))) { //if both sets have same element
+    //             setIntersect->theKeys.push_back(theKeys.at(i));
+    //         }
+    //     }
+    // } else { // if set2 is larger
+    //     for(int i = 0; i < set2->theKeys.size(); i++) {
+    //         if (is_in(set2->theKeys.at(i))) {
+    //             setIntersect->theKeys.push_back(set2->theKeys.at(i));
+    //         }
+    //     }
+    // }
     return *setIntersect;
     
 }
@@ -127,12 +150,66 @@ bool SetList::is_empty(){
     }
 }
 
-// LinkedListClass<string> SetArray::union(LinkedListClass<string> list){
+// SetList -> SetList
+// Walk thru List, append data to setUnion, 
+// second walk thru given set, append only if data isnt already in setUnion
+SetList SetList::Union(SetList* set2){
+    SetList* setUnion = new SetList();
+    Node<string>* nodeSet2 = set2->theKeys.getHeadNode();
+    //Node<string>* nodeKey = theKeys.searchInts(key);
+    Node<string>* nodeKey = theKeys.getHeadNode();
+
+    // adds all of the elements from one set into the union
+    for(int i = 0; i < theKeys.countNodes(); i++) {
+        setUnion->theKeys.Append(&(nodeKey->data));
+        nodeKey = nodeKey->nextNode;
+        
+    }
+    // checks to see if the elements in set2 are in setUnion. If an element
+    // of set2 is not in setUnion, then add that element to setUnion
     
-// }
-// LinkedListClass<string> SetArray::intersection(LinkedListClass<string> list){
+    for(int i = 0; i < set2->theKeys.countNodes(); i++) {
+        
+        if (!(setUnion->is_in(nodeSet2->data))){ //if that string is not in the other list, then add
+            setUnion->theKeys.Append(&(nodeSet2->data));
+        }
+       
+        nodeSet2 = nodeSet2->nextNode;
+    }
+    return *setUnion;
     
-// }
+}
+
+SetList SetList::Intersection(SetList* set2){
+    SetList* setIntersect = new SetList();
+    Node<string>* nodeKey = theKeys.getHeadNode();
+    Node<string>* nodeSet2 = set2->theKeys.getHeadNode();
+    
+    if(theKeys.countNodes() < set2->theKeys.countNodes()){
+        for(int i = 0; i < theKeys.countNodes(); i++){
+            for(int j = 0; j < set2->theKeys.countNodes(); j++){
+                if(nodeSet2->data == nodeKey->data){
+                    setIntersect->theKeys.Append(&(nodeKey->data));
+                }   
+                nodeSet2 = nodeSet2->nextNode;
+            }
+            nodeKey = nodeKey->nextNode;
+        }
+    }
+    else {
+         for(int i = 0; i < set2->theKeys.countNodes(); i++){
+            for(int j = 0; j < theKeys.countNodes(); j++){
+                 if(nodeKey->data == nodeSet2->data){
+                    setIntersect->theKeys.Append(&(nodeKey->data));
+                }   
+                nodeKey = nodeKey->nextNode;
+            }
+            nodeSet2 = nodeSet2->nextNode;
+        }
+    }
+    
+    return *setIntersect;
+}
 
 // --------------------------------SetHash--------------------------------------
 
@@ -187,10 +264,41 @@ bool SetHash::is_empty(){
     
 }
 
-// HashMap<string> SetArray::union(HashMap<string> map){
+SetHash SetHash::Union(SetHash* set2){
+    SetHash* setUnion = new SetHash();
     
-// }
+    // for(int i = 0; i < 1000; i++){
+    //     Node<string>* nodeKey = map.getTable()[i].getHeadNode();
+    //     if(nodeKey != 0){//meaning there is something at that bucket to add
+    //         for(int j = 0; j < map.getTable()[i].countNodes(); j++) {
+    //             setUnion->map.getTable()[i].Append(&(nodeKey->data));
+    //             nodeKey = nodeKey->nextNode;
+    //         }
+    //     }
+    // }
+    
+    
+    // for(int i = 0; i < 1000; i++){
+    //     Node<string>* nodeSet2 = set2->map.getTable()[i].getHeadNode();
+    //     if(nodeSet2 != 0){//meaning there is something at that bucket to add
+    //         for(int j = 0; j < map.getTable()[i].countNodes(); j++) {
+    //             if(nodeSet2->data == setUnion->map.getTable()[]){
+                    
+    //             }
+    //             setUnion->map.getTable()[i].Append(&(nodeKey->data));
+    //             nodeKey = nodeKey->nextNode;
+    //         }
+    //     }
+    // }
+    
+    
+    
+    return *setUnion;
+}
 
-// HashMap<string> SetArray::intersection(HashMap<string> map){
+SetHash SetHash::Intersection(SetHash* map){
+    SetHash* setIntersect = new SetHash();
+
     
-// }
+    return *setIntersect;
+}
